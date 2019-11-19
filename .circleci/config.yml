@@ -63,6 +63,7 @@ jobs:
           sleep $SLEEP
           date
           echo 'Done sleeping.'
+      - run: sleep 15000
     environment:
       SLEEP: 1
 
@@ -75,6 +76,7 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run: sleep 15000
 
   docker_layer_caching:
     <<: *remote_docker_defaults
@@ -86,6 +88,7 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run: sleep 15000
 
   machine_dlc:
     machine:
@@ -96,6 +99,7 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run: sleep 15000
 
   # feature jobs
   contexts:
@@ -187,13 +191,13 @@ jobs:
 
 workflows:
   version: 2
-  resource_class_jobs:
-    jobs:
-      - small
-      - medium
-      - medium+
-      - large
-      - xlarge
+  # resource_class_jobs:
+  #   jobs:
+  #     - small
+  #     - medium
+  #     - medium+
+  #     - large
+  #     - xlarge
 
   vm_jobs:
     jobs:
@@ -202,16 +206,16 @@ workflows:
       - docker_layer_caching
       - machine_dlc
 
-  feature_jobs:
-    jobs:
-      - save_and_restore_cache
-      - contexts:
-          context: org-global
-      - multi-contexts:
-          context: individual-local
-      - write_workspace
-      - read_workspace:
-          requires:
-            - write_workspace
-      - artifacts_test_results
+  # feature_jobs:
+  #   jobs:
+  #     - save_and_restore_cache
+  #     - contexts:
+  #         context: org-global
+  #     - multi-contexts:
+  #         context: individual-local
+  #     - write_workspace
+  #     - read_workspace:
+  #         requires:
+  #           - write_workspace
+  #     - artifacts_test_results
 
