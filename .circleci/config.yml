@@ -36,6 +36,7 @@ jobs:
   small: # 1 vCPU, 2GB RAM
     <<: *resource_job_defaults
     resource_class: small
+    parallelism: 2
 
   medium: # 2 vCPUs, 4GB RAM
     <<: *resource_job_defaults
